@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tareas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+       
+        .container {
+            width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+       
+        input[type="text"] {
+            width: 94%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+       
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+       
+        li {
+            margin-bottom: 5px;
+            padding: 5px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+       
+        li.done {
+            text-decoration: line-through;
+            background-color: #d9ffd6;
+        }
+       
+        .actions {
+            margin-top: 10px;
+        }
+       
+        .actions button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+       
+        .actions button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Lista de Tareas</h2>
+        <input type="text" id="taskInput" placeholder="Agregar nueva tarea">
+        <ul id="taskList"></ul>
+        <div class="actions">
+            <button onclick="addTask()">Agregar Tarea</button>
+            <button onclick="clearTasks()">Limpiar Lista</button>
+        </div>
+    </div>
+
+    <script>
+        function loadTasks() {
+            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            const taskList = document.getElementById('taskList');
+
+            taskList.innerHTML = '';
+
+            tasks.forEach(task => {
+                const li = document.createElement('li');
+                li.textContent = task.text;
+                if (task.completed) {
+                    li.classList.add('done');
+                }
+                li.addEventListener('click', () => toggleTask(task));
+                taskList.appendChild(li);
+            });
+        }
+
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            const text = input.value.trim();
+
+            if (text !== '') {
+                const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+                tasks.push({ text, completed: false });
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+                loadTasks();
+                input.value = '';
+            }
+        }
+
+        function toggleTask(task) {
+            task.completed = !task.completed;
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            loadTasks();
+        }
+
+        function clearTasks() {
+            localStorage.removeItem('tasks');
+            loadTasks();
+        }
+
+        document.addEventListener('DOMContentLoaded', loadTasks);
+    </script>
+</body>
+</html>

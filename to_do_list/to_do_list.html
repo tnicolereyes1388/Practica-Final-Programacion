@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tareas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        .task-actions {
+            float: right;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Lista de Tareas</h2>
+        <input type="text" id="taskInput" placeholder="Agregar nueva tarea">
+        <button onclick="addTask()">Agregar Tarea</button>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        function renderTasks() {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = '';
+
+            tasks.forEach((task, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span>${task.description}</span>
+                                <div class="task-actions">
+                                    <button onclick="editTask(${index})">Editar</button>
+                                    <button onclick="completeTask(${index})">Completar</button>
+                                    <button onclick="deleteTask(${index})">Eliminar</button>
+                                </div>`;
+                if (task.completed) {
+                    li.classList.add('completed');
+                }
+                taskList.appendChild(li);
+            });
+
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            const description = taskInput.value.trim();
+
+            if (description !== '') {
+                tasks.push({ description, completed: false });
+                renderTasks();
+                taskInput.value = '';
+            }
+        }
+
+        function editTask(index) {
+            const newDescription = prompt('Editar tarea:', tasks[index].description);
+            if (newDescription !== null) {
+                tasks[index].description = newDescription.trim();
+                renderTasks();
+            }
+        }
+
+        function completeTask(index) {
+            tasks[index].completed = !tasks[index].completed;
+            renderTasks();
+        }
+
+        function deleteTask(index) {
+            if (confirm('¿Estás seguro de eliminar esta tarea?')) {
+                tasks.splice(index, 1);
+                renderTasks();
+            }
+        }
+
+        renderTasks();
+    </script>
+</body>
+</html>

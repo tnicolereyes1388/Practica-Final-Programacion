@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Factorial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .calculator {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+        
+        input {
+            width: 180px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h2>Calculadora de Factorial</h2>
+        <label for="numero">Número:</label>
+        <input type="number" id="numero" placeholder="Ingrese un número"><br>
+        <button onclick="calcular()">Calcular Factorial</button>
+        <div id="resultado"></div>
+    </div>
+    <script>
+        function calcular() {
+            var numero = parseInt(document.getElementById('numero').value);
+            var factorial = 1;
+            
+            for (var i = 1; i <= numero; i++) {
+                factorial *= i;
+            }
+            
+            document.getElementById('resultado').innerText = 'El factorial de ' + numero + ' es: ' + factorial;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjeta de Claves</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            width: 900px; 
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .numbers-container {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr); 
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .number {
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="card" id="card">
+        <h2>Tarjeta de Claves</h2>
+        <div class="numbers-container" id="numbers"></div>
+        <button onclick="generateNumbers()">Generar Nuevas Claves</button>
+    </div>
+
+    <script>
+        const card = document.getElementById('card');
+        const numbersContainer = document.getElementById('numbers');
+
+        function generateRandomNumber() {
+            const randomNumber = Math.floor(Math.random() * 10000);
+            return randomNumber.toString().padStart(4, '0');
+        }
+
+        function generateNumbers() {
+            numbersContainer.innerHTML = '';
+            for (let i = 0; i < 40; i++) {
+                const number = generateRandomNumber();
+                const numberElement = document.createElement('div');
+                numberElement.classList.add('number');
+                numberElement.textContent = number;
+                numbersContainer.appendChild(numberElement);
+            }
+        }
+
+        generateNumbers();
+    </script>
+</body>
+</html>
